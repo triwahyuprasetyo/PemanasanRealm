@@ -18,6 +18,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private final String LOG_TAG = "MAIN ACTIVITY";
     private Button buttonAdd;
     private Button buttonRetrieve;
+    private Button buttonUpdate;
+    private Button buttonDelete;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,6 +33,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         buttonAdd.setOnClickListener(this);
         buttonRetrieve = (Button) findViewById(R.id.button_retrieve);
         buttonRetrieve.setOnClickListener(this);
+        buttonUpdate = (Button) findViewById(R.id.button_update);
+        buttonUpdate.setOnClickListener(this);
+        buttonDelete = (Button) findViewById(R.id.button_delete);
+        buttonDelete.setOnClickListener(this);
     }
 
     @Override
@@ -81,7 +87,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     Log.i(LOG_TAG, "error");
                 }
             });
-        } else {
+        } else if (view.getId() == buttonRetrieve.getId()) {
             RealmResults<Employee> employees = realm.where(Employee.class).findAll();
             if (employees.size() > 0) {
                 for (Employee employee : employees) {
@@ -94,6 +100,33 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             } else {
                 Log.i(LOG_TAG, "Employee Kosong");
             }
+        } else if (view.getId() == buttonUpdate.getId()) {
+            realm.executeTransaction(new Realm.Transaction() {
+                @Override
+                public void execute(Realm realm) {
+                    Employee employee = realm.where(Employee.class).equalTo("employeeId", "E-333").findFirst();
+                    if (employee != null) {
+                        employee.setFirstName("Valentino");
+                        employee.setLastName("Rossi");
+                        employee.setAge(37);
+                        employee.setAddress("Italia");
+                    } else {
+                        Log.i(LOG_TAG, "Data tidak ditemukan");
+                    }
+                }
+            });
+        } else {
+            final RealmResults<Employee> employees = realm.where(Employee.class).findAll();
+            realm.executeTransaction(new Realm.Transaction() {
+                @Override
+                public void execute(Realm realm) {
+                    if (employees.size() > 0) {
+                        employees.deleteFromRealm(0); // Delete and remove object directly
+                    } else {
+                        Log.i(LOG_TAG, "Employee Kosong");
+                    }
+                }
+            });
         }
     }
 }
