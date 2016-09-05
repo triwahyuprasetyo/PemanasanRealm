@@ -55,14 +55,14 @@
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="New Button"
-        android:id="@+id/button"
+        android:text="Department"
+        android:id="@+id/button_department"
         android:layout_gravity="center_horizontal" />
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="New Button"
-        android:id="@+id/button2"
+        android:text="Employee"
+        android:id="@+id/button_employee"
         android:layout_gravity="center_horizontal" />
 </LinearLayout>

@@ -1,5 +1,6 @@
 package com.sebangsa.pemanasanrealm;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -21,6 +22,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private Button buttonDelete;
     private Button buttonAddDept;
     private Button buttonViewDept;
+    private Button buttonDeptartment;
+    private Button buttonEmployee;
     private RealmService realmService;
 
     @Override
@@ -43,6 +46,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         buttonAddDept.setOnClickListener(this);
         buttonViewDept = (Button) findViewById(R.id.button_view_dept);
         buttonViewDept.setOnClickListener(this);
+
+
+        buttonDeptartment = (Button) findViewById(R.id.button_department);
+        buttonDeptartment.setOnClickListener(this);
+        buttonEmployee = (Button) findViewById(R.id.button_employee);
+        buttonEmployee.setOnClickListener(this);
 
         realmService = RealmService.getRealmService(this);
     }
@@ -163,6 +172,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             realmService.addEmployee(employee1, "SB-Dept-Web");
 
 
+        } else if (view.getId() == buttonDeptartment.getId()) {
+            Intent i = new Intent(MainActivity.this, DepartmentActivity.class);
+            startActivity(i);
+        } else if (view.getId() == buttonEmployee.getId()) {
+            Intent i = new Intent(MainActivity.this, EmployeeActivity.class);
+            startActivity(i);
         } else {
 //            Department department3 = new Department();
 //            department3.setDepartmentId("SB-Dept-Web");
