@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.Button;
 
 import com.sebangsa.pemanasanrealm.model.Department;
+import com.sebangsa.pemanasanrealm.model.Employee;
 import com.sebangsa.pemanasanrealm.service.RealmService;
 
 import io.realm.RealmResults;
@@ -134,28 +135,34 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 //                    }
 //                }
 //            });
-            Department department3 = new Department();
-            department3.setDepartmentId("SB-Dept-Web");
-            department3.setName("Web Development Devision");
-
-            realmService.deleteDepartment(department3);
 
         } else if (view.getId() == buttonAddDept.getId()) {
-            Department department1 = new Department();
-            department1.setDepartmentId("SB-Dept-Android");
-            department1.setName("Android Development");
+//            Department department1 = new Department();
+//            department1.setDepartmentId("SB-Dept-Android");
+//            department1.setName("Android Development");
+//
+//            Department department2 = new Department();
+//            department2.setDepartmentId("SB-Dept-API");
+//            department2.setName("API Development");
+//
+//            Department department3 = new Department();
+//            department3.setDepartmentId("SB-Dept-Web");
+//            department3.setName("Web Development");
+//
+//            realmService.addDepartment(department1);
+//            realmService.addDepartment(department2);
+//            realmService.addDepartment(department3);
 
-            Department department2 = new Department();
-            department2.setDepartmentId("SB-Dept-API");
-            department2.setName("API Development");
+            Employee employee1 = new Employee();
+            employee1.setEmployeeId("E-111" + Math.random());
+            employee1.setFirstName("Tri" + Math.random());
+            employee1.setLastName("Wahyu" + Math.random());
+            employee1.setAge(25);
+            employee1.setAddress("Karanganyar" + Math.random());
 
-            Department department3 = new Department();
-            department3.setDepartmentId("SB-Dept-Web");
-            department3.setName("Web Development");
+            realmService.addEmployee(employee1, "SB-Dept-Web");
 
-            realmService.addDepartment(department1);
-            realmService.addDepartment(department2);
-            realmService.addDepartment(department3);
+
         } else {
 //            Department department3 = new Department();
 //            department3.setDepartmentId("SB-Dept-Web");
@@ -171,6 +178,23 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             } else {
                 Log.i(LOG_TAG, "Department Kosong");
             }
+
+            Department dep = realmService.getDepartment("SB-Dept-Web");
+            if (dep != null) {
+                Log.i(LOG_TAG, "Ketemu " + dep.getName());
+            } else {
+                Log.i(LOG_TAG, "Tidak Ketemu");
+            }
+
+
+            if (dep.getEmployees().size() > 0) {
+                for (Employee e : dep.getEmployees()) {
+                    Log.i(LOG_TAG, e.getEmployeeId());
+                }
+            } else {
+                Log.i(LOG_TAG, "Department Kosong");
+            }
         }
     }
 }
+

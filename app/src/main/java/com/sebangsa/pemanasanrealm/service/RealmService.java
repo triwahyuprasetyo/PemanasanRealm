@@ -4,6 +4,7 @@ import android.content.Context;
 import android.util.Log;
 
 import com.sebangsa.pemanasanrealm.model.Department;
+import com.sebangsa.pemanasanrealm.model.Employee;
 
 import io.realm.Realm;
 import io.realm.RealmConfiguration;
@@ -55,6 +56,10 @@ public class RealmService {
         return realm.where(Department.class).findAll();
     }
 
+    public Department getDepartment(String departmentId) {
+        return realm.where(Department.class).equalTo("departmentId", departmentId).findFirst();
+    }
+
     public void updateDepartmentName(final Department department) {
         realm.executeTransactionAsync(new Realm.Transaction() {
             @Override
@@ -75,11 +80,11 @@ public class RealmService {
         });
     }
 
-    public void deleteDepartment(final Department department) {
+    public void deleteDepartment(final String departmentId) {
         realm.executeTransactionAsync(new Realm.Transaction() {
             @Override
             public void execute(Realm realm) {
-                Department d = realm.where(Department.class).equalTo("departmentId", department.getDepartmentId()).findFirst();
+                Department d = realm.where(Department.class).equalTo("departmentId", departmentId).findFirst();
                 if (d != null) {
                     d.deleteFromRealm();
                 } else {
@@ -95,6 +100,88 @@ public class RealmService {
             @Override
             public void onError(Throwable error) {
                 Log.i(LOG_TAG, "delete department error : ");
+                error.printStackTrace();
+            }
+        });
+    }
+
+    public void addEmployee(final Employee employee, final String departmentId) {
+        realm.executeTransactionAsync(new Realm.Transaction() {
+            @Override
+            public void execute(Realm realm) {
+                Employee e = realm.createObject(Employee.class);
+                e.setEmployeeId(employee.getEmployeeId());
+                e.setFirstName(employee.getFirstName());
+                e.setLastName(employee.getLastName());
+                e.setAge(employee.getAge());
+                e.setAddress(employee.getAddress());
+                Department d = realm.where(Department.class).equalTo("departmentId", departmentId).findFirst();
+                d.getEmployees().add(e);
+            }
+        }, new Realm.Transaction.OnSuccess() {
+            @Override
+            public void onSuccess() {
+                Log.i(LOG_TAG, "add Employee sucsess");
+            }
+        }, new Realm.Transaction.OnError() {
+            @Override
+            public void onError(Throwable error) {
+                Log.i(LOG_TAG, "add Employee error");
+            }
+        });
+    }
+
+    public RealmResults<Employee> getAllEmployee() {
+        return realm.where(Employee.class).findAll();
+    }
+
+    public Employee getEmployee(String employeeId) {
+        return realm.where(Employee.class).equalTo("employeeId", employeeId).findFirst();
+    }
+
+    public void updateEmployeeName(final Employee employee) {
+        realm.executeTransactionAsync(new Realm.Transaction() {
+            @Override
+            public void execute(Realm realm) {
+                Employee e = realm.where(Employee.class).equalTo("employeeId", employee.getEmployeeId()).findFirst();
+                e.setFirstName(employee.getFirstName());
+                e.setLastName(employee.getLastName());
+                e.setAge(employee.getAge());
+                e.setAddress(employee.getAddress());
+            }
+        }, new Realm.Transaction.OnSuccess() {
+            @Override
+            public void onSuccess() {
+                Log.i(LOG_TAG, "update employee sucsess");
+            }
+        }, new Realm.Transaction.OnError() {
+            @Override
+            public void onError(Throwable error) {
+                Log.i(LOG_TAG, "update employee error");
+            }
+        });
+    }
+
+    public void deleteEmployee(final String employeeId) {
+        realm.executeTransactionAsync(new Realm.Transaction() {
+            @Override
+            public void execute(Realm realm) {
+                Employee e = realm.where(Employee.class).equalTo("employeeId", employeeId).findFirst();
+                if (e != null) {
+                    e.deleteFromRealm();
+                } else {
+                    Log.i(LOG_TAG, "delete - employee tidak ditemukan");
+                }
+            }
+        }, new Realm.Transaction.OnSuccess() {
+            @Override
+            public void onSuccess() {
+                Log.i(LOG_TAG, "delete employee sucsess");
+            }
+        }, new Realm.Transaction.OnError() {
+            @Override
+            public void onError(Throwable error) {
+                Log.i(LOG_TAG, "delete employee error : ");
                 error.printStackTrace();
             }
         });
