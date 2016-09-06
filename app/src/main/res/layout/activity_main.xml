@@ -10,57 +10,15 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.sebangsa.pemanasanrealm.MainActivity">
 
-
     <Button
-        android:id="@+id/button_add"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Add" />
-
-    <Button
-        android:id="@+id/button_retrieve"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:text="Retrieve" />
-
-    <Button
-        android:id="@+id/button_update"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:text="Update" />
-
-    <Button
-        android:id="@+id/button_delete"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:text="Delete" />
-
-    <Button
-        android:id="@+id/button_add_dept"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:text="Tambah Department" />
-
-    <Button
-        android:id="@+id/button_view_dept"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:text="Lihat Semua Department" />
-
-    <Button
-        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Department"
         android:id="@+id/button_department"
         android:layout_gravity="center_horizontal" />
 
     <Button
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Employee"
         android:id="@+id/button_employee"
