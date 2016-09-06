@@ -37,6 +37,7 @@ public class EmployeeActivity extends AppCompatActivity implements View.OnClickL
         EventBus.getDefault().register(this);
         realmService = RealmService.getRealmService(this);
         setAdapterList();
+        setTitle("Employee List");
     }
     @Override
     protected void onDestroy() {
@@ -45,7 +46,7 @@ public class EmployeeActivity extends AppCompatActivity implements View.OnClickL
     }
 
     @Subscribe
-    public void onDepartmentEvent(Employee e) {
+    public void onEmployeeEvent(Employee e) {
         if (realmService.getEmployee(e.getEmployeeId()) == null) {
             realmService.addEmployee(e);
         } else {
@@ -88,9 +89,9 @@ public class EmployeeActivity extends AppCompatActivity implements View.OnClickL
                 i.putExtra("EmployeeId", employee.getEmployeeId());
                 i.putExtra("EmployeeFirstName", employee.getFirstName());
                 i.putExtra("EmployeeLastName", employee.getLastName());
-                i.putExtra("EmployeeAge", employee.getAge());
+                i.putExtra("EmployeeAge", employee.getAge()+"");
                 i.putExtra("EmployeeAddress", employee.getAddress());
-                i.putExtra("EmployeeDepartmentId", employee.getDepartment().getDepartmentId());
+                i.putExtra("EmployeeDepartmentId", employee.getDepartmentId());
                 startActivity(i);
             }
         });

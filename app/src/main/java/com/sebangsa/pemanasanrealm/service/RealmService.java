@@ -154,7 +154,8 @@ public class RealmService {
                 e.setLastName(employee.getLastName());
                 e.setAge(employee.getAge());
                 e.setAddress(employee.getAddress());
-                Department d = realm.where(Department.class).equalTo("departmentId", employee.getDepartment().getDepartmentId()).findFirst();
+                e.setDepartmentId(employee.getDepartmentId());
+                Department d = realm.where(Department.class).equalTo("departmentId", employee.getDepartmentId()).findFirst();
                 d.getEmployees().add(e);
             }
         });
@@ -170,7 +171,8 @@ public class RealmService {
                 e.setLastName(employee.getLastName());
                 e.setAge(employee.getAge());
                 e.setAddress(employee.getAddress());
-                Department d = realm.where(Department.class).equalTo("departmentId", employee.getDepartment().getDepartmentId()).findFirst();
+                e.setDepartmentId(employee.getDepartmentId());
+                Department d = realm.where(Department.class).equalTo("departmentId", employee.getDepartmentId()).findFirst();
                 d.getEmployees().add(e);
             }
         }, new Realm.Transaction.OnSuccess() {

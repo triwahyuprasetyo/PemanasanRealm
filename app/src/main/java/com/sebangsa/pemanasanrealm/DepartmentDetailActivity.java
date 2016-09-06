@@ -39,6 +39,7 @@ public class DepartmentDetailActivity extends AppCompatActivity implements View.
         }else{
             buttonSaveDepartment.setText(action);
         }
+        setTitle("Department Form");
     }
 
     @Override

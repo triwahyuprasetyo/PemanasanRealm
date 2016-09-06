@@ -37,6 +37,7 @@ public class DepartmentActivity extends AppCompatActivity implements View.OnClic
         EventBus.getDefault().register(this);
         realmService = RealmService.getRealmService(this);
         setAdapterList();
+        setTitle("Department List");
     }
 
     @Override
