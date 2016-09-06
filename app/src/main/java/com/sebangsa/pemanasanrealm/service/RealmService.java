@@ -32,6 +32,17 @@ public class RealmService {
     }
 
     public void addDepartment(final Department department) {
+        realm.executeTransaction(new Realm.Transaction() {
+            @Override
+            public void execute(Realm bgRealm) {
+                Department d = bgRealm.createObject(Department.class);
+                d.setDepartmentId(department.getDepartmentId());
+                d.setName(department.getName());
+            }
+        });
+    }
+
+    public void addDepartmentAsync(final Department department) {
         realm.executeTransactionAsync(new Realm.Transaction() {
             @Override
             public void execute(Realm bgRealm) {
@@ -61,6 +72,16 @@ public class RealmService {
     }
 
     public void updateDepartmentName(final Department department) {
+        realm.executeTransaction(new Realm.Transaction() {
+            @Override
+            public void execute(Realm realm) {
+                Department d = realm.where(Department.class).equalTo("departmentId", department.getDepartmentId()).findFirst();
+                d.setName(department.getName());
+            }
+        });
+    }
+
+    public void updateDepartmentNameAsync(final Department department) {
         realm.executeTransactionAsync(new Realm.Transaction() {
             @Override
             public void execute(Realm realm) {
@@ -81,6 +102,20 @@ public class RealmService {
     }
 
     public void deleteDepartment(final String departmentId) {
+        realm.executeTransaction(new Realm.Transaction() {
+            @Override
+            public void execute(Realm realm) {
+                Department d = realm.where(Department.class).equalTo("departmentId", departmentId).findFirst();
+                if (d != null) {
+                    d.deleteFromRealm();
+                } else {
+                    Log.i(LOG_TAG, "delete - department tidak ditemukan");
+                }
+            }
+        });
+    }
+
+    public void deleteDepartmentAsync(final String departmentId) {
         realm.executeTransactionAsync(new Realm.Transaction() {
             @Override
             public void execute(Realm realm) {
