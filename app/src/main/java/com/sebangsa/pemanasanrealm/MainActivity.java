@@ -162,14 +162,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 //            realmService.addDepartment(department2);
 //            realmService.addDepartment(department3);
 
-            Employee employee1 = new Employee();
-            employee1.setEmployeeId("E-111" + Math.random());
-            employee1.setFirstName("Tri" + Math.random());
-            employee1.setLastName("Wahyu" + Math.random());
-            employee1.setAge(25);
-            employee1.setAddress("Karanganyar" + Math.random());
-
-            realmService.addEmployee(employee1, "SB-Dept-Web");
+//            Employee employee1 = new Employee();
+//            employee1.setEmployeeId("E-111" + Math.random());
+//            employee1.setFirstName("Tri" + Math.random());
+//            employee1.setLastName("Wahyu" + Math.random());
+//            employee1.setAge(25);
+//            employee1.setAddress("Karanganyar" + Math.random());
+//
+//            realmService.addEmployee(employee1, "SB-Dept-Web");
 
 
         } else if (view.getId() == buttonDeptartment.getId()) {
@@ -185,30 +185,30 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 //
 //            realmService.updateDepartmentName(department3);
 
-            RealmResults<Department> departments = realmService.getAllDepartments();
-            if (departments.size() > 0) {
-                for (Department department : departments) {
-                    Log.i(LOG_TAG, "" + department.getDepartmentId() + " ---- " + department.getName());
-                }
-            } else {
-                Log.i(LOG_TAG, "Department Kosong");
-            }
-
-            Department dep = realmService.getDepartment("SB-Dept-Web");
-            if (dep != null) {
-                Log.i(LOG_TAG, "Ketemu " + dep.getName());
-            } else {
-                Log.i(LOG_TAG, "Tidak Ketemu");
-            }
-
-
-            if (dep.getEmployees().size() > 0) {
-                for (Employee e : dep.getEmployees()) {
-                    Log.i(LOG_TAG, e.getEmployeeId());
-                }
-            } else {
-                Log.i(LOG_TAG, "Department Kosong");
-            }
+//            RealmResults<Department> departments = realmService.getAllDepartments();
+//            if (departments.size() > 0) {
+//                for (Department department : departments) {
+//                    Log.i(LOG_TAG, "" + department.getDepartmentId() + " ---- " + department.getName());
+//                }
+//            } else {
+//                Log.i(LOG_TAG, "Department Kosong");
+//            }
+//
+//            Department dep = realmService.getDepartment("SB-Dept-Web");
+//            if (dep != null) {
+//                Log.i(LOG_TAG, "Ketemu " + dep.getName());
+//            } else {
+//                Log.i(LOG_TAG, "Tidak Ketemu");
+//            }
+//
+//
+//            if (dep.getEmployees().size() > 0) {
+//                for (Employee e : dep.getEmployees()) {
+//                    Log.i(LOG_TAG, e.getEmployeeId());
+//                }
+//            } else {
+//                Log.i(LOG_TAG, "Department Kosong");
+//            }
         }
     }
 }

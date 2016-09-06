@@ -23,7 +23,11 @@ public class RealmService {
     }
 
     public static RealmService getRealmService(Context context) {
-        RealmConfiguration realmConfig = new RealmConfiguration.Builder(context).build();
+//        RealmConfiguration realmConfig = new RealmConfiguration.Builder(context).build();
+        RealmConfiguration realmConfig = new RealmConfiguration
+                .Builder(context)
+                .deleteRealmIfMigrationNeeded()
+                .build();
         Realm.setDefaultConfiguration(realmConfig);
         if (realmService == null) {
             realmService = new RealmService();
@@ -140,7 +144,23 @@ public class RealmService {
         });
     }
 
-    public void addEmployee(final Employee employee, final String departmentId) {
+    public void addEmployee(final Employee employee) {
+        realm.executeTransaction(new Realm.Transaction() {
+            @Override
+            public void execute(Realm realm) {
+                Employee e = realm.createObject(Employee.class);
+                e.setEmployeeId(employee.getEmployeeId());
+                e.setFirstName(employee.getFirstName());
+                e.setLastName(employee.getLastName());
+                e.setAge(employee.getAge());
+                e.setAddress(employee.getAddress());
+                Department d = realm.where(Department.class).equalTo("departmentId", employee.getDepartment().getDepartmentId()).findFirst();
+                d.getEmployees().add(e);
+            }
+        });
+    }
+
+    public void addEmployeeAsync(final Employee employee) {
         realm.executeTransactionAsync(new Realm.Transaction() {
             @Override
             public void execute(Realm realm) {
@@ -150,7 +170,7 @@ public class RealmService {
                 e.setLastName(employee.getLastName());
                 e.setAge(employee.getAge());
                 e.setAddress(employee.getAddress());
-                Department d = realm.where(Department.class).equalTo("departmentId", departmentId).findFirst();
+                Department d = realm.where(Department.class).equalTo("departmentId", employee.getDepartment().getDepartmentId()).findFirst();
                 d.getEmployees().add(e);
             }
         }, new Realm.Transaction.OnSuccess() {
@@ -174,7 +194,20 @@ public class RealmService {
         return realm.where(Employee.class).equalTo("employeeId", employeeId).findFirst();
     }
 
-    public void updateEmployeeName(final Employee employee) {
+    public void updateEmployee(final Employee employee) {
+        realm.executeTransaction(new Realm.Transaction() {
+            @Override
+            public void execute(Realm realm) {
+                Employee e = realm.where(Employee.class).equalTo("employeeId", employee.getEmployeeId()).findFirst();
+                e.setFirstName(employee.getFirstName());
+                e.setLastName(employee.getLastName());
+                e.setAge(employee.getAge());
+                e.setAddress(employee.getAddress());
+            }
+        });
+    }
+
+    public void updateEmployeeAsync(final Employee employee) {
         realm.executeTransactionAsync(new Realm.Transaction() {
             @Override
             public void execute(Realm realm) {
@@ -198,6 +231,20 @@ public class RealmService {
     }
 
     public void deleteEmployee(final String employeeId) {
+        realm.executeTransaction(new Realm.Transaction() {
+            @Override
+            public void execute(Realm realm) {
+                Employee e = realm.where(Employee.class).equalTo("employeeId", employeeId).findFirst();
+                if (e != null) {
+                    e.deleteFromRealm();
+                } else {
+                    Log.i(LOG_TAG, "delete - employee tidak ditemukan");
+                }
+            }
+        });
+    }
+
+    public void deleteEmployeeAsync(final String employeeId) {
         realm.executeTransactionAsync(new Realm.Transaction() {
             @Override
             public void execute(Realm realm) {

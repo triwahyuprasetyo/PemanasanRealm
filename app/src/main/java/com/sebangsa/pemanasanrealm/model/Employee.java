@@ -11,6 +11,7 @@ public class Employee extends RealmObject {
     private String lastName;
     private int age;
     private String address;
+    private Department department;
 
     public Employee() {
     }
@@ -57,5 +58,13 @@ public class Employee extends RealmObject {
 
     public void setAddress(String address) {
         this.address = address;
+    }
+
+    public Department getDepartment() {
+        return department;
+    }
+
+    public void setDepartment(Department department) {
+        this.department = department;
     }
 }
