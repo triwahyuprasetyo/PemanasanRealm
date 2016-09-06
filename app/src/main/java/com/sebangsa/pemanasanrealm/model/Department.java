@@ -2,11 +2,13 @@ package com.sebangsa.pemanasanrealm.model;
 
 import io.realm.RealmList;
 import io.realm.RealmObject;
+import io.realm.annotations.PrimaryKey;
 
 /**
  * Created by sebangsa on 9/5/16.
  */
 public class Department extends RealmObject {
+    @PrimaryKey
     private String departmentId;
     private String name;
     private RealmList<Employee> employees;

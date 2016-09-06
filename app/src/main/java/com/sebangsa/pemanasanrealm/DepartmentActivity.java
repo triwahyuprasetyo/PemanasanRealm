@@ -48,11 +48,12 @@ public class DepartmentActivity extends AppCompatActivity implements View.OnClic
 
     @Subscribe
     public void onDepartmentEvent(Department d) {
-        if (realmService.getDepartment(d.getDepartmentId()) == null) {
-            realmService.addDepartment(d);
-        } else {
-            realmService.updateDepartmentName(d);
-        }
+//        if (realmService.getDepartment(d.getDepartmentId()) == null) {
+//            realmService.addDepartment(d);
+//        } else {
+//            realmService.updateDepartmentName(d);
+//        }
+        realmService.saveDepartment(d);
         setAdapterList();
     }
 

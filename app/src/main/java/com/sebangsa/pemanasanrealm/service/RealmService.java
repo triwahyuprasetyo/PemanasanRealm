@@ -46,6 +46,16 @@ public class RealmService {
         });
     }
 
+    public void saveDepartment(final Department department) {
+
+        realm.executeTransaction(new Realm.Transaction() {
+            @Override
+            public void execute(Realm realmm) {
+                realmm.copyToRealmOrUpdate(department);
+            }
+        });
+    }
+
     public void addDepartmentAsync(final Department department) {
         realm.executeTransactionAsync(new Realm.Transaction() {
             @Override
